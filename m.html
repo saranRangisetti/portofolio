@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Interactive Experience</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="c.css">
+</head>
+<body>
+    <div id="container"></div>
+    
+    <!-- React and ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+
+    <!-- Babel for in-browser JSX transpilation -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- GSAP 3 (free, includes modern API) -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+
+    <!-- GSAP Plugins (free as of 2025) -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/SplitText.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/DrawSVGPlugin.min.js"></script>
+
+    <!-- Register plugins and provide a lightweight shim for legacy TweenMax/TimelineMax usage in core.js -->
+    <script>
+      if (window.gsap) {
+        if (window.DrawSVGPlugin) { gsap.registerPlugin(DrawSVGPlugin); }
+        if (window.SplitText) { gsap.registerPlugin(SplitText); }
+        // Legacy shims so existing code works without edits
+        window.TweenMax = gsap;
+        window.TimelineMax = function(config) { return gsap.timeline(config); };
+        window.Back = { easeOut: "back.out", easeIn: "back.in", easeInOut: "back.inOut" };
+        window.Sine = { easeOut: "sine.out", easeIn: "sine.in", easeInOut: "sine.inOut" };
+      }
+    </script>
+
+    <!-- Safe fallback shim for SplitText if CDN isn't available -->
+    <script>
+      if (typeof window.SplitText === 'undefined') {
+        window.SplitText = function(targetNodes, options) {
+          var nodes = Array.prototype.slice.call(targetNodes || []);
+          var lines = [];
+          nodes.forEach(function(n){
+            if (n && n.nodeType === 1) {
+              if (n.tagName === 'P') { lines.push(n); }
+              if (n.querySelectorAll) {
+                var found = n.querySelectorAll('p');
+                for (var i=0;i<found.length;i++) lines.push(found[i]);
+              }
+            }
+          });
+          this.lines = lines;
+        };
+      }
+    </script>
+
+    <!-- Main Application Script (transpile JSX from external file) -->
+    <script type="text/babel" data-presets="react" src="core.js"></script>
+</body>
+</html>

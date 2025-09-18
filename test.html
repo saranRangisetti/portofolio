@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - Portfolio</title>
+    <style>
+        body {
+            background: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        .test-content {
+            text-align: center;
+            margin-top: 100px;
+        }
+        .test-button {
+            background: white;
+            color: black;
+            padding: 15px 30px;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-content">
+        <h1>Portfolio Test Page</h1>
+        <p>If you can see this, the basic HTML is working.</p>
+        <button class="test-button" onclick="testFunction()">Test JavaScript</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function testFunction() {
+            document.getElementById('result').innerHTML = '<p style="color: green;">JavaScript is working!</p>';
+        }
+        
+        // Test if we can load external scripts
+        console.log('Testing external script loading...');
+        
+        // Try to load React
+        const script = document.createElement('script');
+        script.src = 'https://unpkg.com/react@17/umd/react.production.min.js';
+        script.onload = function() {
+            console.log('React loaded successfully');
+            document.getElementById('result').innerHTML += '<p style="color: green;">React loaded successfully!</p>';
+        };
+        script.onerror = function() {
+            console.log('Failed to load React');
+            document.getElementById('result').innerHTML += '<p style="color: red;">Failed to load React from CDN</p>';
+        };
+        document.head.appendChild(script);
+    </script>
+</body>
+</html>
